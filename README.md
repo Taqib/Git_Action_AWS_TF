@@ -42,3 +42,61 @@ terraform-aws-vpc-github-actions/
 ├── variables.tf
 └── outputs.tf
 
+##Lab Steps:
+
+Step 1: Terraform Cloud Setup
+1. Create a Terraform Cloud Project
+Sign in to Terraform Cloud.
+Navigate to your organization.
+Go to "Projects" and click "New Project".
+Name your project (e.g., "poridhi-terraform") and click "Create Project".
+
+2. Create a Workspace
+Within your project, go to the "Workspaces" tab.
+Click "New Workspace".
+Choose "CLI-driven workflow".
+Name your workspace (e.g., "vpc-workspace") and click "Create Workspace".
+
+3. Generate a Terraform Cloud API Token
+Go to User Settings (top-right corner).
+Under "Tokens", click "Create an API Token".
+Name your token and click "Create".
+Copy the token and add it to your GitHub Secrets as TF_CLOUD_TOKEN.
+
+##Step 2: Setting Up the VPC and Public Subnet
+
+Create the Terraform Configuration Files
+Create the following files in your project directory:
+
+main.tf: Contains the main configuration for setting up the VPC, subnet, security group, key pair, and EC2 instance.
+
+variables.tf: Defines the variables used in the main.tf file, including the SSH public key.
+
+outputs.tf: Specifies the outputs from your Terraform configuration, such as the public IP, VPC ID, Subnet ID, and Security Group ID.
+
+##Step 2: Setting Up GitHub Actions:
+
+2.1 Store AWS Credentials and SSH Keys in GitHub Secrets:
+
+Generate SSH Keys (if you haven't already):
+--"ssh-keygen -t rsa -b 4096 -C "your_email@example.com""
+
+This generates a private key (id_rsa) and a public key (id_rsa.pub) in the ~/.ssh/ directory.
+
+**Store Secrets:
+
+-Navigate to your GitHub repository.
+
+-Go to Settings > Secrets and variables > Actions > New repository secret.
+
+Add the following secrets:
+
+1.AWS_ACCESS_KEY_ID: Your AWS access key ID.
+2.AWS_SECRET_ACCESS_KEY: Your AWS secret access key.
+3.SSH_PRIVATE_KEY: Paste the contents of your id_rsa file in ~/.ssh directory.
+4.SSH_PUBLIC_KEY: Paste the contents of your id_rsa.pub in ~/.ssh directory.
+5.TF_CLOUD_TOKEN: Add the Terraform Cloud API token as a secret.
+
+2.2 Create a GitHub Actions Workflow:
+
+Create a .github/workflows/deploy.yml file in your repository with the following content:
