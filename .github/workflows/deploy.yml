@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup SSH Key
         run: |
@@ -46,13 +46,13 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Save Terraform Plan
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: tfplan
           path: tfplan
 
       - name: Download Terraform Plan
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: tfplan
           path: .
